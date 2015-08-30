@@ -3,7 +3,8 @@
 # vim: ai ts=4 sts=4 et sw=4 nu
 # maintainer: Fadiga
 
-from __future__ import (unicode_literals, absolute_import, division, print_function)
+from __future__ import (
+    unicode_literals, absolute_import, division, print_function)
 
 from Common import peewee
 
@@ -21,7 +22,7 @@ class Store(BaseModel):
     #     order_by = ('name',)
 
     name = peewee.CharField(max_length=100, unique=True)
-    stock_maxi = peewee.IntegerField(default=1000)
+    stock_maxi = peewee.IntegerField(default=1000, null=True)
 
     def __str__(self):
         return self.display_name()
@@ -40,7 +41,7 @@ class Category(BaseModel):
     def __str__(self):
         return self.display_name()
 
-    def display_name (self):
+    def display_name(self):
         return u"{}".format(self.name)
 
     @classmethod

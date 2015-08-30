@@ -60,13 +60,13 @@ class ProductsViewWidget(FWidget):
         self.setLayout(vbox)
 
     def export_xls(self):
-        dict_data =  {
+        dict_data = {
             'file_name': "produits.xls",
-            'headers' : self.table_prod.hheaders,
+            'headers': self.table_prod.hheaders,
             'data': self.table_prod.data,
             'sheet': self.title,
             'widths': self.table_prod.stretch_columns
-         }
+        }
         export_dynamic_data(dict_data)
 
     def add_prod(self):
@@ -81,12 +81,13 @@ class ProductsTableWidget(FTableWidget):
         FTableWidget.__init__(self, parent=parent, *args, **kwargs)
         self.parent = parent
 
-        self.hheaders = [u"Categorie", u"Article", u"Quantité(carton)", u"code"]
+        self.hheaders = [u"Categorie", u"Article"]
+        # , u"Quantité(carton)"]
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.popup)
 
-        self.stretch_columns = [1, 2, 3]
-        self.align_map = {0: 'l', 1: 'l', 2: 'r', 3: 'l'}
+        self.stretch_columns = [1]
+        self.align_map = {0: 'l', 1: 'l', 2: 'r'}
         self.display_vheaders = True
         self.sorter = True
 
@@ -98,17 +99,17 @@ class ProductsTableWidget(FTableWidget):
         self.set_data_for()
         self.refresh()
 
-
     def set_data_for(self):
-        self.data = [(prod.category.name, prod.name,  prod.number_parts_box, prod.code)
-                      for prod in Product.select().order_by(Product.name.asc())]
+        self.data = [(prod.category.name, prod.name)
+                     for prod in Product.select().order_by(Product.name.asc())]
 
     def popup(self, pos):
         row = self.selectionModel().selection().indexes()[0].row()
         if (len(self.data) - 1) < row:
             return False
 
-        self.product = Product.select().where(Product.name == self.data[row][1]).get()
+        self.product = Product.select().where(
+            Product.name == self.data[row][1]).get()
         menu = QMenu()
         menu.addAction(QIcon(u"{}edit.png".format(Config.img_cmedia)),
                        u"modifier", lambda: self.prod_edit(self.product))
@@ -128,15 +129,14 @@ class ProductsTableWidget(FTableWidget):
                         u"<h2>Il y a eu au moins un rapport pour cet article"
                         u"</h2></br><i>IL faut les supprimés d'abord</i>")
 
-
     def prod_edit(self, product):
         self.parent.open_dialog(EditOrAddProductsDialog,
                                 modal=True, product=product,
-                                 table_p=self.parent.table_prod)
+                                table_p=self.parent.table_prod)
 
     def _item_for_data(self, row, column, data, context=None):
         return super(ProductsTableWidget, self)._item_for_data(row, column,
                                                                data, context)
 
     def click_item(self, row, column, *args):
-       pass
+        pass
