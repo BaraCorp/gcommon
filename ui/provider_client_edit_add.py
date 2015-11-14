@@ -94,8 +94,7 @@ class EditOrAddClientOrProviderDialog(QDialog, FWidget):
         try:
             prov_clt.save()
             self.close()
-            self.table_p.name_client_field.addItems(
-                ["{},{}".format(prov_clt.name, prov_clt.phone)])
+            self.table_p.refresh_()
             self.parent.Notify(u"Le Compte %s a été mise à jour" %
                                prov_clt.name, "success")
         except peewee.IntegrityError:
