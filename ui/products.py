@@ -81,8 +81,7 @@ class ProductsTableWidget(FTableWidget):
         FTableWidget.__init__(self, parent=parent, *args, **kwargs)
         self.parent = parent
 
-        self.hheaders = [u"Categorie", u"Article"]
-        # , u"Quantité(carton)"]
+        self.hheaders = [u"Categorie", u"Article", u"Quantité(carton)"]
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.popup)
 
@@ -100,7 +99,7 @@ class ProductsTableWidget(FTableWidget):
         self.refresh()
 
     def set_data_for(self):
-        self.data = [(prod.category.name, prod.name)
+        self.data = [(prod.category.name, prod.name, prod.number_parts_box)
                      for prod in Product.select().order_by(Product.name.asc())]
 
     def popup(self, pos):

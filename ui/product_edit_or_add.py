@@ -67,14 +67,14 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         formbox = QFormLayout()
         formbox.addRow(FLabel(u"Nom"), self.name_field)
         formbox.addRow(FLabel(u"Categorie"), self.category_field)
-        # formbox.addRow(
-        #     FLabel(u"Quantité (carton)"), self.number_parts_box_field)
+        formbox.addRow(
+            FLabel(u"Quantité (carton)"), self.number_parts_box_field)
         self.butt_parco = QPushButton(
             QIcon.fromTheme('document-open', QIcon('')), self.filename)
         self.butt_parco.clicked.connect(self.import_image)
         butt_cancel = Warning_btt(u"Annuler")
         butt_cancel.clicked.connect(self.cancel)
-        # formbox.addRow(FLabel(u"Image"), self.butt_parco)
+        formbox.addRow(FLabel(u"Image"), self.butt_parco)
         butt = Button_save(u"&Enregistrer")
         butt.clicked.connect(self.add_or_edit_prod)
         formbox.addRow(butt_cancel, butt)
@@ -98,7 +98,7 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         flag = True
         if (check_is_empty(self.name_field) or
                 check_is_empty(self.category_field)
-                # or check_is_empty(self.number_parts_box_field)
+                or check_is_empty(self.number_parts_box_field)
                 ):
             flag = False
         return flag
@@ -111,11 +111,11 @@ class EditOrAddProductsDialog(QDialog, FWidget):
 
         name = str(self.name_field.text())
         category = str(self.category_field.text())
-        # number_parts_box = str(self.number_parts_box_field.text())
+        number_parts_box = str(self.number_parts_box_field.text())
 
         product = self.prod
         product.name = name
-        # product.number_parts_box = number_parts_box
+        product.number_parts_box = number_parts_box
         product.category = Category.get_or_create(category)
 
         # try:
