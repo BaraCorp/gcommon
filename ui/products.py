@@ -12,7 +12,6 @@ from PyQt4.QtGui import (QVBoxLayout, QFileDialog, QGridLayout,
                          QTableWidgetItem, QIcon, QMenu)
 
 from Common.ui.util import raise_error
-from Common.exports_xls import export_dynamic_data
 from Common.ui.table import FTableWidget
 from Common.ui.common import (FWidget, FPageTitle, Button, BttExportXLS)
 
@@ -21,6 +20,11 @@ from GCommon.ui.product_edit_or_add import EditOrAddProductsDialog
 
 from configuration import Config
 from models import Product
+
+try:
+    unicode
+except:
+    unicode = str
 
 
 class ProductsViewWidget(FWidget):
@@ -48,10 +52,10 @@ class ProductsViewWidget(FWidget):
         butt.clicked.connect(self.add_prod)
         gridbox.addWidget(butt, 0, 2)
 
-        self.export_xls_btt = BttExportXLS(u"Exporter")
-        self.connect(self.export_xls_btt, SIGNAL('clicked()'),
-                     self.export_xls)
-        gridbox.addWidget(self.export_xls_btt, 0, 4)
+        self.export_xlsx_btt = BttExportXLS(u"Exporter")
+        self.connect(self.export_xlsx_btt, SIGNAL('clicked()'),
+                     self.export_xlsx)
+        gridbox.addWidget(self.export_xlsx_btt, 0, 4)
 
         gridbox.setColumnStretch(0, 3)
         # gridbox.setRowStretch(0, 1)
@@ -59,12 +63,15 @@ class ProductsViewWidget(FWidget):
         vbox.addLayout(tablebox)
         self.setLayout(vbox)
 
-    def export_xls(self):
+    def export_xlsx(self):
+        from Common.exports_xlsx import export_dynamic_data
         dict_data = {
-            'file_name': "produits.xls",
+            'file_name': "produits.xlsx",
             'headers': self.table_prod.hheaders,
             'data': self.table_prod.data,
+            # 'data': self.table_prod.get_table_items(),
             'sheet': self.title,
+            'title': self.title,
             'widths': self.table_prod.stretch_columns
         }
         export_dynamic_data(dict_data)
@@ -81,7 +88,7 @@ class ProductsTableWidget(FTableWidget):
         FTableWidget.__init__(self, parent=parent, *args, **kwargs)
         self.parent = parent
 
-        self.hheaders = [u"Categorie", u"Article"]
+        self.hheaders = [u"Categorie", u"Article", ""]
         # , u"Quantité(carton)"]
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.popup)
