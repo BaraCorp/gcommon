@@ -1,7 +1,8 @@
 #!usr/bin/env python
 # -*- encoding: utf-8 -*-
 # maintainer: Fad
-from __future__ import (unicode_literals, absolute_import, division, print_function)
+from __future__ import (
+    unicode_literals, absolute_import, division, print_function)
 
 from PyQt4.QtCore import Qt, SIGNAL, SLOT
 from PyQt4.QtGui import (QVBoxLayout, QGridLayout, QIcon,
@@ -12,7 +13,7 @@ from Common.ui.common import (FWidget, FPageTitle, FBoxTitle, Button,
                               BttExportXLS)
 from Common.ui.util import raise_success, raise_error
 from Common.ui.table import FTableWidget
-from Common.exports_xls import export_dynamic_data
+from Common.exports_xlsx import export_dynamic_data
 
 from configuration import Config
 
@@ -26,7 +27,7 @@ class StoresViewWidget(FWidget):
 
     def __init__(self, store="", parent=0, *args, **kwargs):
         super(StoresViewWidget, self).__init__(parent=parent,
-                                                *args, **kwargs)
+                                               *args, **kwargs)
         self.parentWidget().setWindowTitle(Config.APP_NAME + u"  MAGASINS")
 
         self.parent = parent
@@ -63,19 +64,20 @@ class StoresViewWidget(FWidget):
         self.setLayout(vbox)
 
     def export_xls(self):
-        dict_data =  {
+        dict_data = {
             'file_name': "produits.xls",
-            'headers' : self.store_table.hheaders,
+            'headers': self.store_table.hheaders,
             'data': self.store_table.data,
             'sheet': self.title,
             'widths': self.store_table.stretch_columns
-         }
+        }
         export_dynamic_data(dict_data)
 
     def add_store(self):
         ''' add operation '''
         self.parent.open_dialog(EditOrAddStoresViewWidget, modal=True,
                                 store=None, table_p=self.store_table)
+
 
 class StoresTableWidget(FTableWidget):
 
@@ -109,7 +111,8 @@ class StoresTableWidget(FTableWidget):
         if (len(self.data) - 1) < row:
             return False
 
-        self.store = Store.select().where(Store.name == self.data[row][0]).get()
+        self.store = Store.select().where(
+            Store.name == self.data[row][0]).get()
         menu = QMenu()
         menu.addAction(QIcon(u"{}edit.png".format(Config.img_cmedia)),
                        u"modifier", lambda: self.prod_edit(self.store))
@@ -120,10 +123,10 @@ class StoresTableWidget(FTableWidget):
 
     def prod_del(self, store):
         if not store.get_report_or_none():
-                self.parent.open_dialog(ConfirmDeletionDiag, modal=True,
-                                        obj_delete=store,
-                                        msg="{}".format(store.name),
-                                        table_p=self.parent.store_table)
+            self.parent.open_dialog(ConfirmDeletionDiag, modal=True,
+                                    obj_delete=store,
+                                    msg="{}".format(store.name),
+                                    table_p=self.parent.store_table)
         else:
             raise_error(u"Suppresion impossible",
                         u"<h2>Il y a eu au moins un rapport dans ce magasin"
@@ -131,8 +134,8 @@ class StoresTableWidget(FTableWidget):
 
     def prod_edit(self, store):
         self.parent.open_dialog(EditOrAddStoresViewWidget, modal=True,
-                                    store=store, table_p=self.parent.store_table)
+                                store=store, table_p=self.parent.store_table)
 
     def _item_for_data(self, row, column, data, context=None):
         return super(StoresTableWidget, self)._item_for_data(row, column,
-                                                              data, context)
+                                                             data, context)

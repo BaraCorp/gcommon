@@ -52,7 +52,8 @@ class EditOrAddClientOrProviderDialog(QDialog, FWidget):
 
         self.name = LineEdit(self.prov_clt.name)
         self.phone_field = IntLineEdit(str(self.prov_clt.phone))
-        self.phone_field.setInputMask("D9.99.99.99")
+        # self.phone_field.setInputMask("D9.999.99.99.99.99")
+        self.phone_field.setInputMask("+D99999999999999")
         self.legal_infos = LineEdit(self.prov_clt.legal_infos)
         self.address = QTextEdit(self.prov_clt.address)
         self.email = LineEdit(self.prov_clt.email)
