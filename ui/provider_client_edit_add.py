@@ -15,7 +15,7 @@ from configuration import Config
 from Common.ui.util import check_is_empty, field_error
 from Common.ui.common import (FWidget, FPageTitle, Button_save, FormLabel,
                               FLabel, LineEdit, IntLineEdit, Warning_btt)
-from Common import peewee
+import peewee
 from models import ProviderOrClient
 
 

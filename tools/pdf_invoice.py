@@ -106,10 +106,10 @@ def pdf_view(filename, invoice):
         output.write(outputStream)
         outputStream.close()
         return file_dest
-    except OSError:
+    except OSError as e:
         from Common.ui.util import raise_error
         raise_error(u"Impossible de lancer le PDF", """
-                    Car un autre en cours d'utilistation. Kill le""")
+                    Car un autre en cours d'utilistation. Kill le \n{}""".format(e))
         return
 
 
