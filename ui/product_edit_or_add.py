@@ -5,6 +5,7 @@ from __future__ import (
     unicode_literals, absolute_import, division, print_function)
 
 import os
+import peewee
 
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QIcon, QVBoxLayout, QFileDialog, QDialog,
@@ -13,9 +14,9 @@ from PyQt4.QtGui import (QIcon, QVBoxLayout, QFileDialog, QDialog,
 from configuration import Config
 
 from Common.ui.util import check_is_empty, field_error
-from Common.ui.common import (FWidget, FPageTitle, Button_save, FormLabel,
+from Common.ui.common import (FWidget, Button_save,
                               FLabel, LineEdit, IntLineEdit, Warning_btt)
-from Common import peewee
+
 from models import Category, Product, FileJoin
 
 
@@ -83,7 +84,7 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         self.setLayout(vbox)
 
     def import_image(self):
-        """ """
+
         self.path_filename = QFileDialog.getOpenFileName(self, "Open Image", "",
                                                          "Documents ({})".format(Config.DOC_SUPPORT),)
         if self.path_filename:
@@ -99,7 +100,7 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         if (check_is_empty(self.name_field) or
                 check_is_empty(self.category_field)
                 or check_is_empty(self.number_parts_box_field)
-                ):
+            ):
             flag = False
         return flag
 

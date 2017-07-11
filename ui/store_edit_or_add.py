@@ -5,6 +5,8 @@
 from __future__ import (
     unicode_literals, absolute_import, division, print_function)
 
+import peewee
+
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QIcon, QVBoxLayout, QTableWidgetItem,
                          QDialog, QFormLayout)
@@ -15,7 +17,6 @@ from Common.ui.common import (FWidget, FPageTitle, Button, IntLineEdit,
                               FLabel, LineEdit, Warning_btt, Button_save)
 from Common.ui.util import check_is_empty, field_error
 from models import Store
-from Common import peewee
 
 
 class EditOrAddStoresViewWidget(QDialog, FWidget):
