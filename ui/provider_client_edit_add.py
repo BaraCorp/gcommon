@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # maintainer: Fad
+
 from __future__ import (
     unicode_literals, absolute_import, division, print_function)
 
-import os
-
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import (QIcon, QVBoxLayout, QFileDialog, QDialog, QTextEdit,
-                         QIntValidator, QFormLayout, QPushButton, QCompleter)
-
-from configuration import Config
+from PyQt4.QtGui import (QVBoxLayout, QDialog,
+                         QTextEdit, QFormLayout)
 
 from Common.ui.util import check_is_empty, field_error
-from Common.ui.common import (FWidget, FPageTitle, Button_save, FormLabel,
-                              FLabel, LineEdit, IntLineEdit, Warning_btt)
+
+from Common.ui.common import (
+    FWidget, Button_save, FormLabel, LineEdit, IntLineEdit)
 import peewee
 from models import ProviderOrClient
 
@@ -60,7 +57,7 @@ class EditOrAddClientOrProviderDialog(QDialog, FWidget):
 
         formbox = QFormLayout()
         formbox.addRow(FormLabel(u"Nom complete : *"), self.name)
-        formbox.addRow(FormLabel(u"Tel: *"), self.phone_field)
+        # formbox.addRow(FormLabel(u"Tel: *"), self.phone_field)
         formbox.addRow(FormLabel(u"E-mail :"), self.email)
         formbox.addRow(FormLabel(u"addresse complete :"), self.address)
         formbox.addRow(FormLabel(u"Info. legale :"), self.legal_infos)
