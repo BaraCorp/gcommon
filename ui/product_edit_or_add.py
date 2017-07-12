@@ -85,8 +85,9 @@ class EditOrAddProductsDialog(QDialog, FWidget):
 
     def import_image(self):
 
-        self.path_filename = QFileDialog.getOpenFileName(self, "Open Image", "",
-                                                         "Documents ({})".format(Config.DOC_SUPPORT),)
+        self.path_filename = QFileDialog.getOpenFileName(
+            self, "Open Image", "", "Image Files ({})".format(
+                Config.DOC_SUPPORT),)
         if self.path_filename:
             self.fileName = str(
                 os.path.basename(u"{}".format(self.path_filename)))
@@ -99,8 +100,7 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         flag = True
         if (check_is_empty(self.name_field) or
                 check_is_empty(self.category_field)
-                or check_is_empty(self.number_parts_box_field)
-            ):
+                or check_is_empty(self.number_parts_box_field)):
             flag = False
         return flag
 
@@ -119,18 +119,18 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         product.number_parts_box = number_parts_box
         product.category = Category.get_or_create(category)
 
-        # try:
-        #     if self.path_filename:
-        #         fileobj = FileJoin(file_name=self.fileName,
-        #                            file_slug=self.path_filename)
-        #         fileobj.save()
-        #         product.file_join = fileobj
-        # except IOError:
-        #     self.parent.Notify(u"""<h2>Problème d'import du fichier</h2>
-        #         Changer le nom du fichier et reesayé si ça ne fonctionne pas contacté le developper""", "error")
-        #     return
-        # except Exception as e:
-        #     print(e)
+        try:
+            if self.path_filename:
+                fileobj = FileJoin(file_name=self.fileName,
+                                   file_slug=self.path_filename)
+                fileobj.save()
+                product.file_join = fileobj
+        except IOError:
+            self.parent.Notify(u"""<h2>Problème d'import du fichier</h2>
+                Changer le nom du fichier et reesayé si ça ne fonctionne pas contacté le developper""", "error")
+            return
+        except Exception as e:
+            print(e)
 
         try:
             product.save()
