@@ -3,10 +3,10 @@
 # maintainer: Fad
 
 from PyQt4.QtGui import (QHBoxLayout, QGridLayout)
-from PyQt4.QtCore import QDate, Qt, QVariant, SIGNAL
+# from PyQt4.QtCore import QDate, Qt, QVariant, SIGNAL
 
 from models import (Store, Product)
-from Common.ui.common import (FWidget, BttSmall, FLabel)
+from Common.ui.common import (FWidget, Button, FLabel)
 
 
 class InfoTableWidget(FWidget):
@@ -19,7 +19,7 @@ class InfoTableWidget(FWidget):
         self.refresh()
         self.info_box = FLabel(" ")
         self.image = FLabel(" ")
-        self.image_btt = BttSmall("")
+        self.image_btt = Button("")
         self.image_btt.setFlat(True)
         self.image_btt.clicked.connect(self.show_image)
 
@@ -27,7 +27,7 @@ class InfoTableWidget(FWidget):
         gridbox = QGridLayout()
         gridbox.addWidget(self.info_box, 0, 0)
         gridbox.addWidget(self.image, 1, 0)
-        gridbox.addWidget(self.image_btt, 1, 1)
+        gridbox.addWidget(self.image_btt, 2, 0)
         hbox.addLayout(gridbox)
         self.setLayout(hbox)
 
@@ -54,9 +54,11 @@ class InfoTableWidget(FWidget):
                 """.format(color_style=color_style, remaining=remaining)
             else:
                 rest_by_store += """<li> {store}: <strong style='{color_style}'>
-                    {nbr_parts} </strong><i>pièces</i> <b>{remaining} </b><i>carton</i>
-                    </li>""".format(store=store.name, color_style=color_style, remaining=remaining,
-                                    nbr_parts=nbr_parts * remaining)
+                    {nbr_parts} </strong><i>pièces</i>  <b>{remaining} </b>
+                    <i>carton</i>
+                    </li>""".format(
+                    store=store.name, color_style=color_style,
+                    remaining=remaining, nbr_parts=nbr_parts * remaining)
         width = height = 50
         if self.prod.image_link:
             self.image_btt.setText("Zoom")

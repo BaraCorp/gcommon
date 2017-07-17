@@ -5,11 +5,9 @@
 from __future__ import (unicode_literals, absolute_import, division,
                         print_function)
 
-import os
-
-from PyQt4.QtCore import Qt, SIGNAL, SLOT
-from PyQt4.QtGui import (QVBoxLayout, QFileDialog, QGridLayout,
-                         QTableWidgetItem, QIcon, QMenu)
+from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtGui import (QVBoxLayout, QGridLayout,
+                         QIcon, QMenu)
 
 from Common.ui.util import raise_error
 from Common.ui.table import FTableWidget
@@ -87,7 +85,7 @@ class ProductsTableWidget(FTableWidget):
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.popup)
 
-        self.stretch_columns = [1]
+        self.stretch_columns = [0, 1, 2]
         self.align_map = {0: 'l', 1: 'l', 2: 'r'}
         self.display_vheaders = True
         self.sorter = True
@@ -95,7 +93,6 @@ class ProductsTableWidget(FTableWidget):
         self.refresh_()
 
     def refresh_(self):
-        """ """
         self._reset()
         self.set_data_for()
         self.refresh()

@@ -4,13 +4,9 @@
 from __future__ import (
     unicode_literals, absolute_import, division, print_function)
 
-import os
 
-from PyQt4.QtCore import Qt
 from PyQt4.QtGui import (QIcon, QVBoxLayout, QFileDialog, QDialog, QTextEdit,
-                         QIntValidator, QFormLayout, QPushButton, QCompleter)
-
-from configuration import Config
+                         QIntValidator, QFormLayout, QPushButton)
 
 from Common.ui.util import check_is_empty, field_error
 from Common.ui.common import (FWidget, FPageTitle, Button_save, FormLabel,

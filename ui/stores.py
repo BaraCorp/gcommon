@@ -138,3 +138,12 @@ class StoresTableWidget(FTableWidget):
     def _item_for_data(self, row, column, data, context=None):
         return super(StoresTableWidget, self)._item_for_data(row, column,
                                                              data, context)
+
+    def click_item(self, row, column, *args):
+        store_column = 0
+        if column == store_column:
+            from ui.report_for_store import ReportForStoreWidget
+            self.parent.change_main_context(ReportForStoreWidget,
+                                            store=self.data[row][store_column])
+        else:
+            return
