@@ -33,7 +33,8 @@ class EditOrAddProductsDialog(QDialog, FWidget):
 
         if self.prod:
             self.title = u"Modification de l'article {}".format(self.prod.name)
-            self.succes_msg = u"L'article <b>%s</b> a été mise à jour" % self.prod.name
+            self.succes_msg = "L'article <b>{}</b> a été mise à jour.".format(
+                self.prod.name)
             try:
                 self.filename = self.prod.file_join.file_name
             except:
@@ -61,8 +62,13 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         completion_values = [catg.name for catg in Category.all()]
         completer = QCompleter(completion_values, parent=self)
         completer.setCaseSensitivity(Qt.CaseInsensitive)
-        completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+        # completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
         self.category_field.setCompleter(completer)
+
+        completion_values = [prod.name for prod in Product.all()]
+        completer = QCompleter(completion_values, parent=self)
+        completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.name_field.setCompleter(completer)
 
         vbox = QVBoxLayout()
         formbox = QFormLayout()
@@ -99,8 +105,8 @@ class EditOrAddProductsDialog(QDialog, FWidget):
     def is_valide(self):
         flag = True
         if (check_is_empty(self.name_field) or
-                check_is_empty(self.category_field)
-                or check_is_empty(self.number_parts_box_field)):
+                check_is_empty(self.category_field) or
+                check_is_empty(self.number_parts_box_field)):
             flag = False
         return flag
 
