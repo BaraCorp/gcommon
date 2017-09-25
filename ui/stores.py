@@ -9,7 +9,7 @@ from PyQt4.QtGui import (QVBoxLayout, QGridLayout, QIcon, QMenu)
 
 from Common.ui.common import (FWidget, FPageTitle, FBoxTitle, Button,
                               IntLineEdit, LineEdit,
-                              BttExportXLS)
+                              BttExportXLSX)
 from Common.ui.util import raise_error
 from Common.ui.table import FTableWidget
 
@@ -49,7 +49,7 @@ class StoresViewWidget(FWidget):
         butt.clicked.connect(self.add_store)
         gridbox.addWidget(butt, 0, 2)
 
-        self.export_xls_btt = BttExportXLS(u"Exporter")
+        self.export_xls_btt = BttExportXLSX(u"")
         self.connect(self.export_xls_btt, SIGNAL('clicked()'),
                      self.export_xlsx)
         gridbox.addWidget(self.export_xls_btt, 0, 4)
@@ -63,12 +63,14 @@ class StoresViewWidget(FWidget):
 
     def export_xlsx(self):
         from Common.exports_xlsx import export_dynamic_data
+
         dict_data = {
-            'file_name': "produits.xls",
+            'file_name': "produits",
             'headers': self.store_table.hheaders,
             'data': self.store_table.data,
             'sheet': self.title,
-            'widths': self.store_table.stretch_columns
+            'widths': self.store_table.stretch_columns,
+            'title': self.title
         }
         export_dynamic_data(dict_data)
 
@@ -103,7 +105,7 @@ class StoresTableWidget(FTableWidget):
 
     def set_data_for(self):
         self.data = [(mag.name, mag.stock_maxi)
-                     for mag in Store.select().order_by(Store.id.desc())]
+                     for mag in Store.select().order_by(Store.name.asc())]
 
     def popup(self, pos):
         row = self.selectionModel().selection().indexes()[0].row()
@@ -115,10 +117,17 @@ class StoresTableWidget(FTableWidget):
         menu = QMenu()
         menu.addAction(QIcon(u"{}edit.png".format(Config.img_cmedia)),
                        u"modifier", lambda: self.prod_edit(self.store))
+        menu.addAction(QIcon("{}moving.png".format(Config.img_cmedia)),
+                       u"Movements", lambda: self.prod_movement(self.store))
         menu.addAction(QIcon("{}del.png".format(Config.img_cmedia)),
                        u"supprimer", lambda: self.prod_del(self.store))
 
         self.action = menu.exec_(self.mapToGlobal(pos))
+
+    def prod_movement(self, store):
+
+        from ui.reports_managers import GReportViewWidget
+        self.parent.change_main_context(GReportViewWidget, store=store)
 
     def prod_del(self, store):
         if not store.get_report_or_none():
