@@ -8,10 +8,7 @@ from __future__ import (
 
 import peewee
 
-from datetime import datetime
-
-from Common.models import (BaseModel, Owner, SettingsAdmin, Version,
-                           FileJoin, Organization)
+from Common.models import (BaseModel)
 
 FDATE = u"%c"
 
