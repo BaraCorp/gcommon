@@ -81,10 +81,10 @@ class EditOrAddProductsDialog(QDialog, FWidget):
         self.butt_parco.clicked.connect(self.import_image)
         butt_cancel = Warning_btt(u"Annuler")
         butt_cancel.clicked.connect(self.cancel)
-        formbox.addRow(FLabel(u"Image"), self.butt_parco)
+        # formbox.addRow(FLabel(u"Image"), self.butt_parco)
         butt = Button_save(u"&Enregistrer")
         butt.clicked.connect(self.add_or_edit_prod)
-        formbox.addRow(butt_cancel, butt)
+        formbox.addRow("", butt)
 
         vbox.addLayout(formbox)
         self.setLayout(vbox)
