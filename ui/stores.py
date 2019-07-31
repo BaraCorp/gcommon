@@ -10,7 +10,7 @@ from PyQt4.QtGui import (QVBoxLayout, QGridLayout, QIcon,
 
 from Common.ui.common import (FWidget, FPageTitle, FBoxTitle, Button,
                               IntLineEdit, FLabel, LineEdit,
-                              BttExportXLS)
+                              BttExportXLSX)
 from Common.ui.util import raise_success, raise_error
 from Common.ui.table import FTableWidget
 from Common.exports_xlsx import export_dynamic_data
@@ -51,7 +51,7 @@ class StoresViewWidget(FWidget):
         butt.clicked.connect(self.add_store)
         gridbox.addWidget(butt, 0, 2)
 
-        self.export_xls_btt = BttExportXLS(u"Exporter")
+        self.export_xls_btt = BttExportXLSX(u"Exporter")
         self.connect(self.export_xls_btt, SIGNAL('clicked()'),
                      self.export_xls)
         gridbox.addWidget(self.export_xls_btt, 0, 4)

@@ -13,7 +13,7 @@ from PyQt4.QtGui import (QVBoxLayout, QFileDialog, QGridLayout,
 
 from Common.ui.util import raise_error
 from Common.ui.table import FTableWidget
-from Common.ui.common import (FWidget, FPageTitle, Button, BttExportXLS)
+from Common.ui.common import (FWidget, FPageTitle, Button, BttExportXLSX)
 
 from GCommon.ui.confirm_deletion import ConfirmDeletionDiag
 from GCommon.ui.product_edit_or_add import EditOrAddProductsDialog
@@ -52,7 +52,7 @@ class ProductsViewWidget(FWidget):
         butt.clicked.connect(self.add_prod)
         gridbox.addWidget(butt, 0, 2)
 
-        self.export_xlsx_btt = BttExportXLS(u"Exporter")
+        self.export_xlsx_btt = BttExportXLSX(u"Exporter")
         self.connect(self.export_xlsx_btt, SIGNAL('clicked()'),
                      self.export_xlsx)
         gridbox.addWidget(self.export_xlsx_btt, 0, 4)
